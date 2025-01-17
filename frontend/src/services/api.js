@@ -14,8 +14,8 @@ export const login = async (email, password) => {
 };
 
 // Récupération du profil
-export const getProfile = async (token) => {
-  return axios.get(`${API_URL}/auth/profile`, {
+export const getProfil = async (token) => {
+  return axios.get(`${API_URL}/auth/profil`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

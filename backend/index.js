@@ -2,7 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 
 const app = express();
-const PORT = process.env.PORT || 3050;
+const PORT = process.env.PORT || 3002;
 
 // Middleware
 app.use(express.json());

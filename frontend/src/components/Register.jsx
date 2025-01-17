@@ -1,66 +1,71 @@
 import React, { useState } from "react";
-import { register } from "../services/api";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-function Register() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  const [message, setMessage] = useState("");
+import ExpenseList from "./ExpenseList";
+import ExpenseForm from "./ExpenseForm";
+import Register from "./Register";
+import Login from "./Login";
+import Profil from "./Profil";
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+function App() {
+  const [editingExpense, setEditingExpense] = useState(null);
+
+  const handleEdit = (expense) => {
+    setEditingExpense(expense);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await register(
-        formData.username,
-        formData.email,
-        formData.password
-      );
-      setMessage(response.data.message);
-    } catch (err) {
-      setMessage(
-        err.response?.data?.message || "Erreur lors de l'inscription."
-      );
-    }
+  const handleSave = () => {
+    setEditingExpense(null);
   };
 
   return (
-    <div>
-      <h2>Inscription</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="username"
-          placeholder="Nom d'utilisateur"
-          value={formData.username}
-          onChange={handleChange}
-          required
+    <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/expenses">Gestion des Dépenses</Link>
+          </li>
+          <li>
+            <Link to="/register">Inscription</Link>
+          </li>
+          <li>
+            <Link to="/login">Connexion</Link>
+          </li>
+          <li>
+            <Link to="/profil">Profil</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <Routes>
+        {/* Route pour la gestion des dépenses */}
+        <Route
+          path="/expenses"
+          element={
+            <div>
+              <h1>Gestion des Dépenses</h1>
+              <ExpenseForm
+                currentExpense={editingExpense}
+                onSave={handleSave}
+              />
+              <ExpenseList onEdit={handleEdit} />
+            </div>
+          }
         />
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
+
+        {/* Routes pour l'authentification */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profil" element={<Profil />} />
+
+        {/* Redirection par défaut */}
+        <Route
+          path="*"
+          element={<h1>Bienvenue ! Veuillez choisir une option.</h1>}
         />
-        <input
-          name="password"
-          type="password"
-          placeholder="Mot de passe"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">S'inscrire</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+      </Routes>
+    </Router>
   );
 }
 
-export default Register;
+export default App;
