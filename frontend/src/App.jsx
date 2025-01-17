@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 

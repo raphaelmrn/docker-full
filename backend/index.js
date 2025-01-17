@@ -32,6 +32,9 @@ app.get("/", (req, res) => {
   res.send("🚀 Bienvenue sur l'API de suivi des dépenses !");
 });
 
+// Route authentification
+app.use("/auth", require("./routes/auth"));
+
 // Route pour tester une requête PostgreSQL
 app.get("/time", async (req, res) => {
   try {
