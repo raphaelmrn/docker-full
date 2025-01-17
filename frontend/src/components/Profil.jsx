@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { getProfile } from "../services/api";
+import { getProfil } from "../services/api";
 
-function Profile() {
+function Profil() {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfil = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         setMessage("Veuillez vous connecter.");
         return;
       }
       try {
-        const response = await getProfile(token);
+        const response = await getProfil(token);
         setUser(response.data.user);
       } catch (err) {
         setMessage(
@@ -23,7 +23,7 @@ function Profile() {
       }
     };
 
-    fetchProfile();
+    fetchProfil();
   }, []);
 
   return (
@@ -40,4 +40,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Profil;
