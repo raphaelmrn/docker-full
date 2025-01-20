@@ -114,7 +114,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Route protégée pour obtenir le profil de l'utilisateur
-router.get("/profile", authenticateToken, async (req, res) => {
+router.get("/profil", authenticateToken, async (req, res) => {
   try {
     const result = await client.query(
       "SELECT id, username, email FROM users WHERE id = $1",
